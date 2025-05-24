@@ -1,5 +1,7 @@
 package com.sanjib.edureka.ms_customer_service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,17 +43,23 @@ public class OrderController {
 								.equals(ProductStatus.AVAILABLE))
 						.forEach(item -> orderCreated.getItems().add(item));
 			}
-
-			orderCreated.setOrderValue(
-					orderCreated.getItems().stream().map(item -> item.getPrice()).reduce(0.0, Double::sum));
-			orderCreated.setPaymentInfo(orderView.getPaymentInfo());
-			orderCreated.setCustomerAddress(orderView.getCustomerAddress());
-			orderCreated.setCartId(cartId);
-			orderCreated.setCustomerId(customerId);
 			
-			Order ordercreated = orderService.createOrder(token, usertype, orderView);
-			kafkaTemplate.send("order_created", ordercreated);
-			return new ResponseEntity<Order>(ordercreated, HttpStatus.CREATED);
+			if (!orderCreated.getItems().isEmpty()) {
+				orderCreated.getItems().stream().forEach(item -> item.setItemId(UUID.randomUUID().toString()));
+
+				orderCreated.setOrderValue(
+						orderCreated.getItems().stream().map(item -> item.getPrice()).reduce(0.0, Double::sum));
+				orderCreated.setPaymentInfo(orderView.getPaymentInfo());
+				orderCreated.setCustomerAddress(orderView.getCustomerAddress());
+				orderCreated.setCartId(cartId);
+				orderCreated.setCustomerId(customerId);
+				orderCreated.setOrderId(UUID.randomUUID().toString());
+			}
+			
+			Order order = orderService.createOrder(token, usertype, orderCreated);
+			
+			kafkaTemplate.send("order_created", order);
+			return new ResponseEntity<Order>(order, HttpStatus.CREATED);
 
 		} else {
 			return ResponseEntity.status(401).body("Invalid Details");

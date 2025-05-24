@@ -3,8 +3,8 @@ package com.sanjib.edureka.ms_customer_service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,8 +21,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Order {
 
-	@Id
-	private Integer orderId;
+	private String orderId;
 	
 	private Integer cartId;
 	
