@@ -1,5 +1,7 @@
 package com.sanjib.edureka.ms_customer_service;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +13,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OrderItem {
+public class Item {
 	
+	@Id
 	private Integer itemId;
 	
 	private Integer productId;

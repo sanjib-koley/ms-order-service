@@ -89,5 +89,29 @@ public class TokenService
         }
         return  productName;
     }
+    
+    
+    public Product getProductFromId(String token,String usertype,Integer productId)
+    {
+    	
+        WebClient productFetchWebClient = ctx.getBean("productFetchWebClientEureka", WebClient.class);
+
+        Product productFetched = null;
+        productFetched =productFetchWebClient.get()
+        		.uri("/{id}", productId)
+                .header("Authorization", token)
+                .header("Usertype", usertype)
+                
+                .retrieve()
+                .bodyToMono(Product.class)
+                .block(); // Thread is Blocked until the response is received
+
+        log.info("Product from product-service: {}", productFetched);
+
+        if(productFetched == null) {
+        	throw new RuntimeException("Product cannot be fetched from Id:::"+productId);
+        }
+        return  productFetched;
+    }
 
 }
