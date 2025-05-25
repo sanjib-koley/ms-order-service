@@ -3,7 +3,6 @@ package com.sanjib.edureka.ms_customer_service ;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,6 +37,12 @@ public class OrderServiceImpl implements OrderService {
 	public void cancelOrder(String id) {
 		Order order =findOrder(id);
 		order.setOrderStatus("Cancelled");
+		mongoTemplate.save(order);
+	}
+	@Override
+	public void fullFillOrder(String id) {
+		Order order =findOrder(id);
+		order.setOrderStatus("FullFilled");
 		mongoTemplate.save(order);
 	}
 

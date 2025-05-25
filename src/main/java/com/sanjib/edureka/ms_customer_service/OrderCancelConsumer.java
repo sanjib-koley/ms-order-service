@@ -18,5 +18,10 @@ public class OrderCancelConsumer {
 	public void cancelOrder(String id) {
 		orderService.cancelOrder(id);
 	}
+	
+	@KafkaListener(topics = "order_complete")
+	public void completeOrder(String id) {
+		orderService.fullFillOrder(id);
+	}
 
 }

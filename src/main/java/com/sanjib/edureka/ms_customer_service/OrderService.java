@@ -7,4 +7,6 @@ public interface OrderService {
 	public Order findOrder(String id);
 	
 	public void cancelOrder(String id);
+	
+	public void fullFillOrder(String id);
 }

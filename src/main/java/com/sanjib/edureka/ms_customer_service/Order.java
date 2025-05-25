@@ -36,7 +36,7 @@ public class Order {
 	
 	private Double orderValue=0.0;
 	
-	private String customerAddress;
+	private String address;
 	
 	private String paymentInfo;
 	

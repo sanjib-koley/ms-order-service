@@ -23,6 +23,4 @@ public class Item {
 	
 	private Double price=0.0;
 	
-	private Long sellerId;
-	
 }

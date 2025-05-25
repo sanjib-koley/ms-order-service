@@ -27,7 +27,7 @@ public class OrderController {
 	@Autowired
 	KafkaTemplate<String, Order> kafkaTemplate;
 
-	@PostMapping("/order/checkout/{customerId}/{cartId}")
+	@PostMapping("/order/create/{customerId}/{cartId}")
 	public ResponseEntity<?> addProductToCart(@PathVariable("customerId") Long customerId,
 			@PathVariable("cartId") Integer cartId, @RequestHeader("Authorization") String token,
 			@RequestHeader("Usertype") String usertype, @RequestBody Order orderView) {
@@ -51,7 +51,7 @@ public class OrderController {
 				orderCreated.setOrderValue(
 						orderCreated.getItems().stream().map(item -> item.getPrice()).reduce(0.0, Double::sum));
 				orderCreated.setPaymentInfo(orderView.getPaymentInfo());
-				orderCreated.setCustomerAddress(orderView.getCustomerAddress());
+				orderCreated.setAddress(orderView.getAddress());
 				orderCreated.setCartId(cartId);
 				orderCreated.setCustomerId(customerId);
 				orderCreated.setOrderId(UUID.randomUUID().toString());
