@@ -7,14 +7,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderCancelConsumer {
 	
+	//@Autowired
+	//OrderRepository orderRepository;
+	
+	
 	@Autowired
-	OrderRepository orderRepository;
+    OrderService orderService;
 	
 	@KafkaListener(topics = "order_cancel")
-	public void cancelOrder(String orderId) {
-		Order order = orderRepository.findOrderByOrderId(orderId);
-		order.setOrderStatus("Cancelled");
-		orderRepository.save(order);
+	public void cancelOrder(String id) {
+		orderService.cancelOrder(id);
 	}
 
 }

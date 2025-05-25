@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -20,7 +22,10 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class Order {
-
+    
+    @MongoId(value=FieldType.OBJECT_ID)
+    private String id;
+    
 	private String orderId;
 	
 	private Integer cartId;

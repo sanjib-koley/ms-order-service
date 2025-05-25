@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,12 +59,17 @@ public class OrderController {
 			
 			Order order = orderService.createOrder(token, usertype, orderCreated);
 			
-			kafkaTemplate.send("order_created", order);
+			kafkaTemplate.send("order_create", order);
 			return new ResponseEntity<Order>(order, HttpStatus.CREATED);
 
 		} else {
 			return ResponseEntity.status(401).body("Invalid Details");
 		}
 
+	}
+	
+	@GetMapping("/order/retrieve/{id}")
+	public ResponseEntity<Order> getOrder(@PathVariable("id") String id) {
+		return new ResponseEntity<Order>(orderService.findOrder(id), HttpStatus.OK);
 	}
 }
