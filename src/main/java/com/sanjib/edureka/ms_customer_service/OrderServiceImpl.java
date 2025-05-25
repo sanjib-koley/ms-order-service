@@ -21,6 +21,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order createOrder(String token, String usertype, Order orderInfo) {
+		orderInfo.setOrderStatus("Created");		
 		return mongoTemplate.save(orderInfo);
 		
 	}
