@@ -1,6 +1,6 @@
 package com.sanjib.edureka.ms_customer_service;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,7 +32,7 @@ public class Order {
 	
 	private Long customerId;
 	
-	private List<Item> items = new ArrayList<>();
+	private List<Item> items = new LinkedList<>();
 	
 	private Double orderValue=0.0;
 	

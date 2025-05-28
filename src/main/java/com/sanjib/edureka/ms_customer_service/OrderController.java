@@ -49,7 +49,7 @@ public class OrderController {
 				orderCreated.getItems().stream().forEach(item -> item.setItemId(UUID.randomUUID().toString()));
 
 				orderCreated.setOrderValue(
-						orderCreated.getItems().stream().map(item -> item.getPrice()).reduce(0.0, Double::sum));
+						orderCreated.getItems().stream().map(item -> (item.getPrice()*item.getQuantity())).reduce(0.0, Double::sum));
 				orderCreated.setPaymentInfo(orderView.getPaymentInfo());
 				orderCreated.setAddress(orderView.getAddress());
 				orderCreated.setCartId(cartId);
